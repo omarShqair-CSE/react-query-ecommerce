@@ -35,7 +35,7 @@ function Categories() {
         )
     }
     return (
-        <Box display="flex" gap={2} flexWrap="wrap" mt={4} justifyContent="center">
+        <Box display="flex" gap={2} flexWrap="wrap" m={7} justifyContent="center">
             {categories?.map((cat) => (
                 <Chip
                     key={cat.id}

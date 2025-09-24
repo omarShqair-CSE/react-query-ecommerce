@@ -97,7 +97,7 @@ function Cart() {
             <TableContainer component={Paper} sx={{ borderRadius: 3, boxShadow: 7 }}>
                 <Table>
                     <TableHead>
-                        <TableRow sx={{ backgroundColor: '#1976d2' }}>
+                        <TableRow sx={{ background: 'linear-gradient(135deg, #3559FDFF 0%, #812CD6FF 100%)', boxShadow: '0 4px 15px rgba(0,0,0,0.1)' }}>
                             <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>productId"</TableCell>
                             <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>productName"</TableCell>
                             <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>price"</TableCell>
