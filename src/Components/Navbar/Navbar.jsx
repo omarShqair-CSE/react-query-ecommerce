@@ -1,116 +1,76 @@
-import { AppBar, Toolbar, Link as MuiLink, Box } from "@mui/material";
-import { Link } from "react-router-dom";
+import { AppBar, Toolbar, Link as MuiLink, Box, Button, Container, Typography } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LoginIcon from '@mui/icons-material/Login';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import { Logout } from "@mui/icons-material";
+import { useContext } from "react";
+import { AuthContext } from "../../Context/AuthContext";
+import { ClassNames } from "@emotion/react";
 function Navbar() {
+
+    const navigate = useNavigate();
+    const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+
+    const logoutFun = () => {
+        localStorage.removeItem('userToken');
+        setIsLoggedIn(false);
+        navigate('/login');
+    }
     return (
-        <AppBar
-            position="static"
-            className="px-4 py-2"
-            sx={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                boxShadow: '0 4px 15px rgba(0,0,0,0.1)'
-            }}
-        >
-            <Toolbar className="w-full d-flex justify-content-between" sx={{ minHeight: '64px' }}>
+        <AppBar position="static" sx={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', boxShadow: '0 4px 15px rgba(0,0,0,0.1)' }}>
+            <Container maxWidth='xl'>
+                <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', minHeight: '64px' }}>
 
-                <Box className="d-flex" sx={{ gap: 2 }}>
-                    <MuiLink
-                        component={Link}
-                        to="/login"
-                        className="text-decoration-none"
-                        sx={{
-                            color: 'white',
-                            textTransform: 'none',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 0.5,
-                            padding: '8px 16px',
-                            borderRadius: '20px',
-                            transition: 'all 0.3s ease',
-                            '&:hover': {
-                                backgroundColor: 'rgba(255,255,255,0.1)',
-                                transform: 'translateY(-2px)'
-                            }
-                        }}
-                    >
-                        <LoginIcon sx={{ fontSize: 20 }} />
-                        Login
-                    </MuiLink>
-                    <MuiLink
-                        component={Link}
-                        to="/register"
-                        className="text-decoration-none"
-                        sx={{
-                            color: 'white',
-                            textTransform: 'none',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 0.5,
-                            padding: '8px 16px',
-                            borderRadius: '20px',
-                            transition: 'all 0.3s ease',
-                            '&:hover': {
-                                backgroundColor: 'rgba(255,255,255,0.1)',
-                                transform: 'translateY(-2px)'
-                            }
-                        }}
-                    >
-                        <AppRegistrationIcon sx={{ fontSize: 20 }} />
-                        Register
-                    </MuiLink>
-                </Box>
+                    <Box sx={{ display: 'flex', gap: 2 }}>
+                        {isLoggedIn && (
+                            <MuiLink
+                                component="button"
+                                onClick={logoutFun}
+                                sx={{
+                                    color: 'white',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: 0.5,
+                                    border: 'none',
+                                    background: 'transparent',
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                <Logout /> Logout
+                            </MuiLink>
+                        )}
+                    </Box>
 
-                <Box className="d-flex" sx={{ gap: 2 }}>
-                    <MuiLink
-                        component={Link}
-                        to="/"
-                        className="text-decoration-none"
-                        sx={{
-                            color: 'white',
-                            textTransform: 'none',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 0.5,
-                            padding: '8px 16px',
-                            borderRadius: '20px',
-                            transition: 'all 0.3s ease',
-                            '&:hover': {
-                                backgroundColor: 'rgba(255,255,255,0.1)',
-                                transform: 'translateY(-2px)'
-                            }
-                        }}
-                    >
-                        <HomeIcon sx={{ fontSize: 20 }} />
-                        Home
-                    </MuiLink>
-                    <MuiLink
-                        component={Link}
-                        to="/cart"
-                        className="text-decoration-none"
-                        sx={{
-                            color: 'white',
-                            textTransform: 'none',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 0.5,
-                            padding: '8px 16px',
-                            borderRadius: '20px',
-                            transition: 'all 0.3s ease',
-                            '&:hover': {
-                                backgroundColor: 'rgba(255,255,255,0.1)',
-                                transform: 'translateY(-2px)'
-                            }
-                        }}
-                    >
-                        <ShoppingCartIcon sx={{ fontSize: 20 }} />
-                        Cart
-                    </MuiLink>
-                </Box>
+                    <Box sx={{ display: 'flex', gap: 7 }}>
+                        {isLoggedIn ? (
+                            <>
+                                <MuiLink component={Link} to="/" sx={{ color: 'white', display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                                    <HomeIcon /> Home
+                                </MuiLink>
+                                <MuiLink component={Link} to="/cart" sx={{ color: 'white', display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                                    <ShoppingCartIcon /> Cart
+                                </MuiLink>
+                            </>
+                        ) : (
+                            <>
+                                <MuiLink component={Link} to="/login" sx={{
+                                    color: 'white', display: 'flex', alignItems: 'center', gap: 0.5
+                                }}>
+                                    <LoginIcon /> Login
+                                </MuiLink>
+                                <MuiLink component={Link} to="/register" sx={{
+                                    color: 'white', display: 'flex', alignItems: 'center', gap: 0.5
+                                }}>
+                                    <AppRegistrationIcon /> Register
+                                </MuiLink>
+                            </>
+                        )}
+                    </Box>
 
-            </Toolbar>
+                </Toolbar>
+            </Container>
         </AppBar>
     )
 }

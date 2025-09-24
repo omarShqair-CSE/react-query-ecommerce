@@ -6,16 +6,28 @@ import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
 import Cart from "../Pages/Cart/Cart";
 import PageNotFound from "../Pages/PageNotFound/PageNotFound";
+import ProtectedRouter from "../Protected/ProtectRouter";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <MainLayout />,
         children: [
-            { index: true, element: <Home /> },
+            {
+                index: true, element:
+                    <ProtectedRouter>
+                        < Home />
+                    </ProtectedRouter>
+
+            },
             { path: '/login', element: <Login /> },
             { path: '/register', element: <Register /> },
-            { path: '/cart', element: <Cart /> },
+            {
+                path: '/cart', element:
+                    <ProtectedRouter>
+                        <Cart />
+                    </ProtectedRouter>
+            },
             { path: '/*', element: <PageNotFound /> }
         ]
     }
