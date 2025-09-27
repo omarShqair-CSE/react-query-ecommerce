@@ -14,7 +14,7 @@ function Product() {
     const { error, isLoading, data: products } = useQuery({
         queryKey: ['product'],
         queryFn: getProduct,
-        staleTime: 5000
+        staleTime: 1000 * 60 * 5
     })
     if (error) return console.log(error);
     if (isLoading) return <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">

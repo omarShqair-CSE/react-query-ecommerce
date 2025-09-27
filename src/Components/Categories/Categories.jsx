@@ -15,7 +15,7 @@ function Categories() {
     const { data: categories, isLoading, error } = useQuery({
         queryKey: ['category'],
         queryFn: getCategories,
-        staleTime: 5000
+        staleTime: 1000 * 60 * 5
     })
 
     if (isLoading) {

@@ -12,7 +12,7 @@ function Brand() {
     const { data: brands, error, isError, isLoading } = useQuery({
         queryKey: ['brands'],
         queryFn: getBrands,
-        staleTime: 5000
+        staleTime: 1000 * 60 * 5
     })
     if (isLoading) {
         return (
