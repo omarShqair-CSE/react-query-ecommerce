@@ -8,6 +8,7 @@ import Cart from "../Pages/Cart/Cart";
 import PageNotFound from "../Pages/PageNotFound/PageNotFound";
 import ProtectedRouter from "../Protected/ProtectRouter";
 import ProductDetails from "../Components/Product/ProductDetails";
+import PublicRouter from "../Protected/PublicRouter";
 
 const router = createBrowserRouter([
     {
@@ -21,8 +22,18 @@ const router = createBrowserRouter([
                     </ProtectedRouter>
 
             },
-            { path: '/login', element: <Login /> },
-            { path: '/register', element: <Register /> },
+            {
+                path: '/login', element:
+                    <PublicRouter>
+                        <Login />
+                    </PublicRouter>
+            },
+            {
+                path: '/register', element:
+                    <PublicRouter>
+                        <Register />
+                    </PublicRouter>
+            },
             {
                 path: '/cart', element:
                     <ProtectedRouter>
