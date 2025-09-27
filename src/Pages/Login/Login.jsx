@@ -1,19 +1,19 @@
 import { Box, Button, CircularProgress, Container, InputAdornment, TextField, Typography } from "@mui/material";
 import axios from "axios"
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthContext";
+import { useTranslation } from "react-i18next";
 
 function Login() {
+  const { t } = useTranslation()
   const { setIsLoggedIn } = useContext(AuthContext);
-
   const { register, handleSubmit } = useForm()
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
-
   const loginFun = async (formData) => {
     try {
       setIsLoading(true)
@@ -32,7 +32,6 @@ function Login() {
     finally {
       setIsLoading(false)
     }
-
   }
 
   return (
@@ -61,7 +60,7 @@ function Login() {
             textAlign="center"
             sx={{ color: "#764ba2", fontWeight: "bold" }}
           >
-            Login page
+            {t("loginPage")}
           </Typography>
 
 
@@ -72,7 +71,7 @@ function Login() {
           >
             <TextField
               {...register("email")}
-              label="Email"
+              label={t("email")}
               required
               fullWidth
               variant="outlined"
@@ -87,7 +86,7 @@ function Login() {
 
             <TextField
               {...register("password")}
-              label="Password"
+              label={t("password")}
               type="password"
               required
               fullWidth
@@ -120,7 +119,7 @@ function Login() {
                 }
               }}
             >
-              {isLoading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : "Login"}
+              {isLoading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : `${t("login")}`}
             </Button>
           </Box>
         </Box>

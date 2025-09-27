@@ -35,7 +35,7 @@ const router = createBrowserRouter([
                         <ProductDetails />
                     </ProtectedRouter>
             },
-            { path: '', element: <PageNotFound /> }
+            { path: '*', element: <PageNotFound /> }
         ]
     }
 ]);

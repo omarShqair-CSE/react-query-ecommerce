@@ -1,19 +1,19 @@
 import { useQuery } from '@tanstack/react-query'
 import { Box, Card, CardContent, CardMedia, CircularProgress, Grid, IconButton, Typography } from '@mui/material'
 import AxiosUserInstance from '../../API/AxiosUserInstans'
+import { useTranslation } from 'react-i18next'
 
 function Brand() {
+    const { t } = useTranslation()
     const getBrands = async () => {
         const response = await AxiosUserInstance.get('/Brands')
         return response.data
     }
-
     const { data: brands, error, isError, isLoading } = useQuery({
         queryKey: ['brands'],
         queryFn: getBrands,
         staleTime: 5000
     })
-
     if (isLoading) {
         return (
             <Box display="flex" justifyContent="center" alignItems="center" >
@@ -21,7 +21,6 @@ function Brand() {
             </Box>
         )
     }
-
     if (isError) {
         return (
             <Box textAlign="center" mt={10}>
@@ -32,6 +31,7 @@ function Brand() {
         )
     }
 
+
     return (
         <Box px={{ xs: 2, sm: 4, md: 6 }} py={8} bgcolor="#f9f9f9">
             <Typography
@@ -41,8 +41,19 @@ function Brand() {
                 textAlign="center"
                 fontWeight="bold"
                 color="#333"
+                sx={{
+                    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                    WebkitBackgroundClip: "text",
+                    color: "transparent",
+                    animation: "shine 3s linear infinite",
+                    "@keyframes shine": {
+                        "0%": { backgroundPosition: "0% 50%" },
+                        "100%": { backgroundPosition: "200% 50%" },
+                    },
+                    backgroundSize: "200% auto",
+                }}
             >
-                Our Brands
+                {t("OurBrands")}
             </Typography>
 
             <Grid container spacing={6} justifyContent="center">

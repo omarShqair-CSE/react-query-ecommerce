@@ -2,27 +2,24 @@ import { useQuery } from "@tanstack/react-query"
 import AxiosUserInstance from "../../API/AxiosUserInstans"
 import { Box, Button, Card, CardContent, CardMedia, CircularProgress, Grid, Rating, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function Product() {
+    const { t } = useTranslation()
     const getProduct = async () => {
-        const response = await AxiosUserInstance('/Products')
+        const response = await AxiosUserInstance.get('/Products')
         console.log(response.data);
         return (response.data)
-
     }
-
     const { error, isLoading, data: products } = useQuery({
         queryKey: ['product'],
         queryFn: getProduct,
         staleTime: 5000
-
     })
     if (error) return console.log(error);
     if (isLoading) return <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
         <CircularProgress size={60} />
     </Box>
-
-
     return (
         <Box px={{ xs: 2, sm: 4, md: 8 }} py={6} bgcolor="#f7f8fc">
             <Typography
@@ -43,7 +40,7 @@ function Product() {
                     backgroundSize: "200% auto",
                 }}
             >
-                Our Products
+                {t("ourProducts")}
             </Typography>
 
             <Grid container spacing={4} justifyContent="center">
@@ -123,7 +120,7 @@ function Product() {
                                             boxShadow: "0px 4px 10px rgba(102,126,234,0.3)",
                                         }}
                                     >
-                                        View Details
+                                        {t("viewDetails")}
                                     </Button>
                                 </CardContent>
                             </Card>

@@ -7,16 +7,16 @@ import { useEffect, useState } from 'react'
 import { Bounce, toast } from 'react-toastify'
 import { Add } from '@mui/icons-material'
 import AxiosUserInstance from '../../API/AxiosUserInstans'
+import { useTranslation } from 'react-i18next'
 
 function Cart() {
-
+    const { t } = useTranslation()
     const [products, setProducts] = useState([])
     const [isLoading, setIsLoading] = useState(true)
-
     const incrementQty = async (id, name) => {
         const response = await AxiosUserInstance.post(`/Carts/increment/${id}`)
         if (response.status === 200) {
-            toast.success("incrementSuccess", { name }, {
+            toast.success(`${t("incrementSuccess")}, ${name}`, {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -29,23 +29,21 @@ function Cart() {
             getProduct()
         }
     }
-
     const clearCart = async () => {
         const token = localStorage.getItem('userToken')
         const response = await axios.delete('https://kashop1.runasp.net/api/Customer/Carts/clear', {
             headers: { Authorization: `Bearer ${token}` }
         })
         if (response.status === 200) {
-            toast.error("cartCleared"), {
+            toast.error(t("cartCleared"), {
                 position: "top-right",
                 autoClose: 5000,
                 theme: "light",
                 transition: Bounce,
-            }
+            })
             getProduct()
         }
     }
-
     const removeItem = async (id) => {
         try {
             const token = localStorage.getItem('userToken')
@@ -53,7 +51,7 @@ function Cart() {
                 headers: { Authorization: `Bearer ${token}` }
             })
             if (response.status === 200) {
-                toast.warn("productDeleted", {
+                toast.warn(t("productDeleted"), {
                     position: "top-right",
                     autoClose: 5000,
                     theme: "light",
@@ -65,7 +63,6 @@ function Cart() {
         }
         getProduct()
     }
-
     const getProduct = async () => {
         try {
             const token = localStorage.getItem("userToken")
@@ -79,9 +76,7 @@ function Cart() {
             setIsLoading(false)
         }
     }
-
     useEffect(() => { getProduct() }, [])
-
     if (isLoading) return (
         <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
             <CircularProgress size={60} />
@@ -91,19 +86,19 @@ function Cart() {
     return (
         <Box px={{ xs: 2, sm: 4, md: 8 }} py={6} bgcolor="#f9f9f9">
             <Typography variant="h4" fontWeight="bold" textAlign="center" mb={4}>
-                🛒 yourCart
+                🛒 {t("yourCart")}
             </Typography>
 
             <TableContainer component={Paper} sx={{ borderRadius: 3, boxShadow: 7 }}>
                 <Table>
                     <TableHead>
                         <TableRow sx={{ background: 'linear-gradient(135deg, #3559FDFF 0%, #812CD6FF 100%)', boxShadow: '0 4px 15px rgba(0,0,0,0.1)' }}>
-                            <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>productId"</TableCell>
-                            <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>productName"</TableCell>
-                            <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>price"</TableCell>
-                            <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>quantity"</TableCell>
-                            <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>total"</TableCell>
-                            <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>action"</TableCell>
+                            <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>{t("productId")}</TableCell>
+                            <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>{t("productName")}</TableCell>
+                            <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>{t("price")}</TableCell>
+                            <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>{t("quantity")}</TableCell>
+                            <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>{t("total")}</TableCell>
+                            <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>{t("action")}</TableCell>
                         </TableRow>
                     </TableHead>
 
@@ -124,7 +119,7 @@ function Cart() {
                                 <TableCell>
                                     <Button sx={{ mx: 1 }} variant="outlined" color="error"
                                         onClick={() => removeItem(item.productId)}>
-                                        delete
+                                        {t("delete")}
                                     </Button>
                                 </TableCell>
                             </TableRow>
@@ -132,12 +127,12 @@ function Cart() {
                         <TableRow>
                             <TableCell colSpan={5} sx={{ textAlign: 'right', fontWeight: 'bold' }}>
                                 <Typography variant="h6" sx={{ display: 'inline' }}>
-                                    total: ${(products.cartTotal).toFixed(2)}
+                                    {t("total")}: ${(products.cartTotal).toFixed(2)}
                                 </Typography>
                             </TableCell>
                             <TableCell sx={{ textAlign: 'right' }}>
                                 <Button variant="contained" color="error" onClick={clearCart}>
-                                    clearAll
+                                    {t("clearAll")}
                                 </Button>
                             </TableCell>
                         </TableRow>

@@ -1,0 +1,38 @@
+{
+  "OurBrands": "Our Brands",
+  "ourCategories": "Our Categories",
+  "home": "Home",
+  "cart": "Cart",
+  "login": "Login",
+  "register": "Register",
+  "viewDetails": "View Details",
+  "ourProducts": "Our Products",
+  "addtoCart": "Add to Cart",
+  "back": "Back",
+  "yourCart": "Your Cart",
+  "incrementSuccess": "Quantity increased successfully",
+  "cartCleared": "Cart cleared successfully",
+  "productDeleted": "Product removed successfully",
+  "clearAll": "Clear All",
+  "loginPage": "Login Page",
+  "email": "Email",
+  "password": "Password",
+  "createYourAccount": "Create Your Account",
+  "userName": "Username",
+  "fullName": "Full Name",
+  "phoneNumber": "Phone Number",
+  "logout": "Logout",
+  "pageNotFound": "Page Not Found",
+  "backToHomePage": "Back to Home Page",
+  "backToPreviousPage": "Back to Previous Page",
+    "productId": "Product ID",
+  "productName": "Product Name",
+  "price": "Price",
+  "quantity": "Quantity",
+  "total": "Total",
+  "action": "Action",
+  "appTitle": "Kashop - Online Store"
+  
+    
+
+}

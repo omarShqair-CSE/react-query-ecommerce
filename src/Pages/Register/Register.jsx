@@ -6,13 +6,13 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import LockIcon from '@mui/icons-material/Lock';
 import { useForm } from "react-hook-form";
 import { usePost } from "../../API/apiRequsted";
+import { useTranslation } from "react-i18next";
 function Register() {
+    const { t } = useTranslation()
     const { register, handleSubmit } = useForm();
     const { loading, postData } = usePost();
-
     const onSubmit = (formData) => {
         //    console.log(formData);
-
         postData("Identity/Account/Register", formData);
     };
 
@@ -42,7 +42,7 @@ function Register() {
                         textAlign="center"
                         sx={{ color: "#764ba2", fontWeight: "bold" }}
                     >
-                        Create Your Account
+                        {t("createYourAccount")}
                     </Typography>
 
                     <Box
@@ -52,7 +52,7 @@ function Register() {
                     >
                         <TextField
                             {...register("Email")}
-                            label="Email"
+                            label={t("email")}
                             required
                             fullWidth
                             variant="outlined"
@@ -66,7 +66,7 @@ function Register() {
                         />
                         <TextField
                             {...register("UserName")}
-                            label="User Name"
+                            label={t("userName")}
                             required
                             fullWidth
                             variant="outlined"
@@ -80,7 +80,7 @@ function Register() {
                         />
                         <TextField
                             {...register("FullName")}
-                            label="Full Name"
+                            label={t("fullName")}
                             required
                             fullWidth
                             variant="outlined"
@@ -94,7 +94,7 @@ function Register() {
                         />
                         <TextField
                             {...register("PhoneNumber")}
-                            label="Phone Number"
+                            label={t("phoneNumber")}
                             required
                             fullWidth
                             variant="outlined"
@@ -108,7 +108,7 @@ function Register() {
                         />
                         <TextField
                             {...register("Password")}
-                            label="Password"
+                            label={t("password")}
                             type="password"
                             required
                             fullWidth
@@ -142,7 +142,7 @@ function Register() {
                                 }
                             }}
                         >
-                            {loading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : "Register"}
+                            {loading ? <CircularProgress size={24} sx={{ color: "#fff" }} /> : `${t("register")}`}
                         </Button>
                     </Box>
                 </Box>

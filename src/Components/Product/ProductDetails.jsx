@@ -6,15 +6,13 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import StarIcon from '@mui/icons-material/Star';
 import { Bounce, toast } from 'react-toastify';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 
 function ProductDetails() {
-
+    const { t } = useTranslation()
     const [isAdding, setIsAdding] = useState(false);
-
     const navigate = useNavigate()
-
-
     const addToCart = async (id) => {
         // alert('test')
         setIsAdding(true);
@@ -39,21 +37,17 @@ function ProductDetails() {
         }
         finally {
             setIsAdding(false);
-
         }
     }
     const { id } = useParams();
-
     const getProductById = async () => {
         const res = await AxiosUserInstance.get(`/Products/${id}`);
         return res.data;
     }
-
     const { data: product, isLoading, error } = useQuery({
         queryKey: ['product', id],
         queryFn: getProductById
     });
-
     if (isLoading) return <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
         <CircularProgress size={60} />
     </Box>;
@@ -121,7 +115,7 @@ function ProductDetails() {
                         }}
                         onClick={() => addToCart(product.id)}
                     >
-                        {isAdding ? <CircularProgress size={20} sx={{ color: "white" }} /> : 'Add to Cart'}
+                        {isAdding ? <CircularProgress size={20} sx={{ color: "white" }} /> : <>{t("addtoCart")}</>}
                     </Button>
                     <Button
                         variant="outlined"
@@ -144,7 +138,7 @@ function ProductDetails() {
                             transition: 'all 0.3s'
                         }}
                     >
-                        Back
+                        {t("back")}
                     </Button>
                 </CardContent>
             </Card>
