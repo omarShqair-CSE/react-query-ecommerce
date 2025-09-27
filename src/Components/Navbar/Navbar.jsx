@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Link as MuiLink, Box, Button, Container } from "@mui/material";
+import { AppBar, Toolbar, Link as MuiLink, Box, Button, Container, Badge } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -10,6 +10,8 @@ import { AuthContext } from "../../Context/AuthContext";
 import { useTranslation } from "react-i18next";
 import TranslateIcon from '@mui/icons-material/Translate';
 import i18next from "i18next";
+import AxiosUserInstance from "../../API/AxiosUserInstans";
+import { useQuery } from "@tanstack/react-query";
 function Navbar() {
 
     const [lang, setLang] = useState(i18next.language)
@@ -33,6 +35,21 @@ function Navbar() {
         document.dir = i18n.dir();
     }, [i18n.language]);
 
+
+    // cart items
+    const fetchProduct = async () => {
+        const response = await AxiosUserInstance.get('/Carts');
+        console.log("from fetchProduct", response.data);
+        return response.data
+
+    }
+    const { data: cartData } = useQuery({
+        queryKey: ['cart'],
+        queryFn: fetchProduct,
+    })
+
+    const cartCount = cartData?.items.length
+    //  console.log("from cartData", cartData?.items.length);
 
     return (
         <AppBar position="static" sx={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', boxShadow: '0 4px 15px rgba(0,0,0,0.1)' }}>
@@ -65,7 +82,10 @@ function Navbar() {
                                     <HomeIcon /> {t("home")}
                                 </MuiLink>
                                 <MuiLink component={Link} to="/cart" sx={{ color: 'white', display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                                    <ShoppingCartIcon /> {t("cart")}
+                                    <Badge badgeContent={cartCount} color="error">
+                                        <ShoppingCartIcon />
+                                    </Badge>
+                                    {t("cart")}
                                 </MuiLink>
                             </>
                         ) : (

@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import AxiosUserInstance from '../../API/AxiosUserInstans';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Box, Button, Card, CardContent, CardMedia, CircularProgress, Rating, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import StarIcon from '@mui/icons-material/Star';
@@ -10,6 +10,8 @@ import { useTranslation } from 'react-i18next';
 
 
 function ProductDetails() {
+    const queryClient = useQueryClient()
+
     const { t } = useTranslation()
     const [isAdding, setIsAdding] = useState(false);
     const navigate = useNavigate()
@@ -31,6 +33,7 @@ function ProductDetails() {
                     theme: "light",
                     transition: Bounce,
                 }
+                queryClient.invalidateQueries(['cart'])
             }
         } catch (error) {
             console.log(error);
@@ -46,7 +49,8 @@ function ProductDetails() {
     }
     const { data: product, isLoading, error } = useQuery({
         queryKey: ['product', id],
-        queryFn: getProductById
+        queryFn: getProductById,
+        staleTime: 1000 * 60 * 5
     });
     if (isLoading) return <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
         <CircularProgress size={60} />

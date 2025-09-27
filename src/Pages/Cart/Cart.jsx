@@ -2,17 +2,37 @@ import {
     CircularProgress, Box, Table, TableBody, TableCell, TableContainer,
     TableHead, TableRow, Paper, Typography, Button
 } from '@mui/material'
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Bounce, toast } from 'react-toastify'
 import { Add } from '@mui/icons-material'
 import AxiosUserInstance from '../../API/AxiosUserInstans'
 import { useTranslation } from 'react-i18next'
+import { useQueryClient } from '@tanstack/react-query'
 
 function Cart() {
+    const queryClient = useQueryClient()
     const { t } = useTranslation()
     const [products, setProducts] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+
+    // const incrementQty = async (id, name) => {
+    //     const response = await AxiosUserInstance.post(`/Carts/increment/${id}`)
+    //     if (response.status === 200) {
+    //         toast.success(`${t("incrementSuccess")}, ${name}`, {
+    //             position: "top-right",
+    //             autoClose: 5000,
+    //             hideProgressBar: false,
+    //             closeOnClick: false,
+    //             pauseOnHover: true,
+    //             draggable: true,
+    //             theme: "light",
+    //             transition: Bounce,
+    //         })
+    //         getProduct()
+    //         queryClient.invalidateQueries(['cart']);
+
+    //     }
+    // }
     const incrementQty = async (id, name) => {
         const response = await AxiosUserInstance.post(`/Carts/increment/${id}`)
         if (response.status === 200) {
@@ -26,12 +46,13 @@ function Cart() {
                 theme: "light",
                 transition: Bounce,
             })
+            queryClient.invalidateQueries(['cart'])
             getProduct()
         }
     }
     const clearCart = async () => {
         const token = localStorage.getItem('userToken')
-        const response = await axios.delete('https://kashop1.runasp.net/api/Customer/Carts/clear', {
+        const response = await AxiosUserInstance.delete('/Carts/clear', {
             headers: { Authorization: `Bearer ${token}` }
         })
         if (response.status === 200) {
@@ -42,31 +63,48 @@ function Cart() {
                 transition: Bounce,
             })
             getProduct()
+            queryClient.invalidateQueries(['cart']);
+
         }
     }
+    // const removeItem = async (id) => {
+    //     try {
+    //         const token = localStorage.getItem('userToken')
+    //         const response = await AxiosUserInstance.delete(`/Carts/${id}`, {
+    //             headers: { Authorization: `Bearer ${token}` }
+    //         })
+    //         if (response.status === 200) {
+    //             toast.warn(t("productDeleted"), {
+    //                 position: "top-right",
+    //                 autoClose: 5000,
+    //                 theme: "light",
+    //                 transition: Bounce,
+    //             })
+    //         }
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    //     getProduct()
+    //     queryClient.invalidateQueries(['cart']);
+
+    // }
     const removeItem = async (id) => {
-        try {
-            const token = localStorage.getItem('userToken')
-            const response = await axios.delete(`https://kashop1.runasp.net/api/Customer/Carts/${id}`, {
-                headers: { Authorization: `Bearer ${token}` }
+        const response = await AxiosUserInstance.delete(`/Carts/${id}`)
+        if (response.status === 200) {
+            toast.warn(t("productDeleted"), {
+                position: "top-right",
+                autoClose: 5000,
+                theme: "light",
+                transition: Bounce,
             })
-            if (response.status === 200) {
-                toast.warn(t("productDeleted"), {
-                    position: "top-right",
-                    autoClose: 5000,
-                    theme: "light",
-                    transition: Bounce,
-                })
-            }
-        } catch (error) {
-            console.log(error)
+            queryClient.invalidateQueries(['cart'])
+            getProduct()
         }
-        getProduct()
     }
     const getProduct = async () => {
         try {
             const token = localStorage.getItem("userToken")
-            const response = await axios.get('https://kashop1.runasp.net/api/Customer/Carts', {
+            const response = await AxiosUserInstance.get('/Carts', {
                 headers: { Authorization: `Bearer ${token}` }
             })
             setProducts(response.data)
