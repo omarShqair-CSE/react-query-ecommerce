@@ -5,12 +5,14 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LoginIcon from '@mui/icons-material/Login';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import { Logout } from "@mui/icons-material";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import { useTranslation } from "react-i18next";
 import TranslateIcon from '@mui/icons-material/Translate';
+import i18next from "i18next";
 function Navbar() {
 
+    const [lang, setLang] = useState(i18next.language)
     const navigate = useNavigate();
     const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
     const logoutFun = () => {
@@ -19,6 +21,18 @@ function Navbar() {
         navigate('/login');
     }
     const { t, i18n } = useTranslation();
+    const changeLang = () => {
+        const newLanguage = (i18n.language === "en" ? "ar" : "en")
+        i18next.changeLanguage(newLanguage)
+        setLang(newLanguage)
+    }
+    // useEffect(() => {
+    //     window.document.dir = i18n.dir()
+    // }, [lang])
+    useEffect(() => {
+        document.dir = i18n.dir();
+    }, [i18n.language]);
+
 
     return (
         <AppBar position="static" sx={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', boxShadow: '0 4px 15px rgba(0,0,0,0.1)' }}>
@@ -78,7 +92,7 @@ function Navbar() {
                                     color: "#764ba2",
                                 }
                             }}
-                            onClick={() => i18n.changeLanguage(i18n.language === "en" ? "ar" : "en")}
+                            onClick={changeLang}
                         >
                             {i18n.language === "en" ? "AR" : "EN"}
                             <TranslateIcon />
