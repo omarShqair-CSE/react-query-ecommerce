@@ -33,6 +33,13 @@
   "action": "الإجراء",
   "appTitle": "كاشوب - متجر إلكتروني",
   "myCompanyName":"شركة عمر",
-  "allRightsReserved":"جميع الحقوق محفوظة"
+  "allRightsReserved":"جميع الحقوق محفوظة",
+  "pleaseVisitShowroom": "يرجى التوجه إلى أحد معارضنا لإتمام عملية الدفع.",
+  "checkout": "الدفع",
+  "paymentMethod": "طريقة الدفع",
+  "cash": "نقداً",
+  "visa": "بطاقة فيزا",
+  "submit": "إرسال"
+
 
 }

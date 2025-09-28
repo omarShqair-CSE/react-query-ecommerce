@@ -33,7 +33,14 @@
   "action": "Action",
   "appTitle": "Kashop - Online Store",
   "myCompanyName":"Omar Company",
-  "allRightsReserved":"All Rights Reserved"
+  "allRightsReserved":"All Rights Reserved",
+  "pleaseVisitShowroom": "Please visit one of our showrooms to complete the payment.",
+  "checkout": "Checkout",
+  "paymentMethod": "Payment Method",
+  "cash": "Cash",
+  "visa": "Visa",
+  "submit": "Submit"
+
   
     
 

@@ -9,6 +9,7 @@ import PageNotFound from "../Pages/PageNotFound/PageNotFound";
 import ProtectedRouter from "../Protected/ProtectRouter";
 import ProductDetails from "../Components/Product/ProductDetails";
 import PublicRouter from "../Protected/PublicRouter";
+import Checkout from "../Pages/Chekout/Checkout";
 
 const router = createBrowserRouter([
     {
@@ -44,6 +45,12 @@ const router = createBrowserRouter([
                 path: '/product/:id', element:
                     <ProtectedRouter>
                         <ProductDetails />
+                    </ProtectedRouter>
+            },
+            {
+                path: '/checkout', element:
+                    <ProtectedRouter>
+                        <Checkout />
                     </ProtectedRouter>
             },
             { path: '*', element: <PageNotFound /> }

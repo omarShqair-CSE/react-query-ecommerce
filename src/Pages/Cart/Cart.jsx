@@ -8,6 +8,7 @@ import { Add } from '@mui/icons-material'
 import AxiosUserInstance from '../../API/AxiosUserInstans'
 import { useTranslation } from 'react-i18next'
 import { useQueryClient } from '@tanstack/react-query'
+import { Link } from 'react-router-dom'
 
 function Cart() {
     const queryClient = useQueryClient()
@@ -155,7 +156,14 @@ function Cart() {
                                 </TableCell>
                                 <TableCell sx={{ fontWeight: 'bold' }}>{item.totalPrice}</TableCell>
                                 <TableCell>
-                                    <Button sx={{ mx: 1 }} variant="outlined" color="error"
+                                    <Button sx={{
+                                        mx: 1, ":hover": {
+                                            bgcolor: 'error.main',
+                                            color: 'white',
+                                            borderColor: 'error.main',
+                                            cursor: 'pointer'
+                                        }
+                                    }} variant="outlined" color="error"
                                         onClick={() => removeItem(item.productId)}>
                                         {t("delete")}
                                     </Button>
@@ -163,15 +171,37 @@ function Cart() {
                             </TableRow>
                         ))}
                         <TableRow>
-                            <TableCell colSpan={5} sx={{ textAlign: 'right', fontWeight: 'bold' }}>
-                                <Typography variant="h6" sx={{ display: 'inline' }}>
+                            <TableCell colSpan={6} sx={{ fontWeight: 'bold', textAlign: 'right' }}>
+                                <Typography variant="h6" sx={{ mr: 12 }}>
                                     {t("total")}: ${(products.cartTotal).toFixed(2)}
                                 </Typography>
                             </TableCell>
-                            <TableCell sx={{ textAlign: 'right' }}>
-                                <Button variant="contained" color="error" onClick={clearCart}>
-                                    {t("clearAll")}
-                                </Button>
+                        </TableRow>
+
+                        <TableRow>
+                            <TableCell colSpan={6} sx={{ textAlign: 'right' }}>
+                                <Box sx={{ display: 'inline-flex', gap: 4 }}>
+                                    <Button variant="outlined" color="error" sx={{
+                                        ":hover": {
+                                            bgcolor: 'error.main',
+                                            color: 'white',
+                                            borderColor: 'error.main',
+                                            cursor: 'pointer'
+                                        }
+                                    }} onClick={clearCart}>
+                                        {t("clearAll")}
+                                    </Button>
+                                    <Button variant="outlined" sx={{
+                                        mr: 10, ":hover": {
+                                            bgcolor: 'primary.main',
+                                            color: 'white',
+                                            borderColor: 'primary.main',
+                                            cursor: 'pointer'
+                                        }
+                                    }} color="primary" component={Link} to='/checkout'>
+                                        {t("checkout")}
+                                    </Button>
+                                </Box>
                             </TableCell>
                         </TableRow>
                     </TableBody>
