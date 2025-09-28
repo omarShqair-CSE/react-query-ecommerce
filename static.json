@@ -2,10 +2,5 @@
   "root": "dist",
   "routes": {
     "/**": "index.html"
-  },
-  "headers": {
-    "/**": {
-      "Content-Type": "application/javascript"
-    }
   }
 }
