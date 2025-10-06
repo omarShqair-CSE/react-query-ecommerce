@@ -11,7 +11,7 @@ function Product() {
         console.log(response.data);
         return (response.data)
     }
-    const { error, isLoading, data: products } = useQuery({
+    const { error, isLoading, data } = useQuery({
         queryKey: ['product'],
         queryFn: getProduct,
         staleTime: 1000 * 60 * 5
@@ -20,6 +20,9 @@ function Product() {
     if (isLoading) return <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
         <CircularProgress size={60} />
     </Box>
+    const products = data?.data || [];
+
+
     return (
         <Box px={{ xs: 2, sm: 4, md: 8 }} py={6} bgcolor="#f7f8fc">
             <Typography
